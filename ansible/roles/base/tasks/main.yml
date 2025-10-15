@@ -1,0 +1,20 @@
+- name: Update/Upgrade distro
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: safe
+
+- name: Install packages
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - git
+      - apt-transport-https
+      - ca-certificates
+      - gnupg
+      - curl
+
+- name: Set timezone to Europe/Paris
+  become: true
+  community.general.timezone:
+    name: Europe/Paris

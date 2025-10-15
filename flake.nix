@@ -18,6 +18,7 @@
             python312
             lazydocker
             dive
+            ansible
           ];
         };
 
