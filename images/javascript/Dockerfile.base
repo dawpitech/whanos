@@ -1,4 +1,4 @@
-FROM node:20.9-alpine
+FROM node:20.9
 
 SHELL ["/bin/bash", "-c"]
 
@@ -9,6 +9,6 @@ ONBUILD COPY package.json .
 
 ONBUILD RUN ["npm", "install"]
 
-ONBUILD COPY app .
+ONBUILD COPY . .
 
-CMD ["node", "app"]
+CMD ["node", "."]

@@ -1,4 +1,4 @@
-FROM node:20.9-alpine
+FROM node:20.9
 
 SHELL ["/bin/bash", "-c"]
 
@@ -9,6 +9,6 @@ COPY package.json .
 
 RUN ["npm", "install"]
 
-COPY app .
+COPY . .
 
-CMD ["node", "app"]
+CMD ["node", "."]
