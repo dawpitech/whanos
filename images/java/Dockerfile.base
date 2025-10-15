@@ -1,0 +1,20 @@
+FROM maven:3.9.11-eclipse-temurin-21-alpine AS builder
+
+SHELL ["/bin/bash", "-c"]
+
+ONBUILD WORKDIR /build
+
+ONBUILD COPY app .
+
+ONBUILD RUN mvn dependency:resolve
+ONBUILD RUN mvn package
+
+FROM eclipse-temurin:21-jre-alpine
+
+SHELL ["/bin/bash", "-c"]
+
+ONBUILD WORKDIR /app
+
+ONBUILD COPY --from=builder /build/target/app.jar .
+
+CMD [ "java", "-jar", "app.jar" ]

@@ -1,0 +1,20 @@
+FROM maven:3.9.11-eclipse-temurin-21-alpine AS builder
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /build
+
+COPY app .
+
+RUN mvn dependency:resolve
+RUN mvn package
+
+FROM eclipse-temurin:21-jre-alpine
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /app
+
+COPY --from=builder /build/target/app.jar .
+
+CMD [ "java", "-jar", "app.jar" ]
