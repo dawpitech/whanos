@@ -1,0 +1,2 @@
+Image du befunge "officielle" dispo qq part ?
+Image de ref des build java "Java SE 21" sauf que java est deprecated et recommande eclipse temurin

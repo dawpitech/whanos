@@ -17,6 +17,7 @@
           packages = with pkgs; [
             python312
             lazydocker
+            dive
           ];
         };
 
