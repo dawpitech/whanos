@@ -4,6 +4,6 @@ SHELL ["/bin/bash", "-c"]
 
 WORKDIR /app
 
-COPY . .
+COPY app .
 
-CMD ["befunge93", "app/main.bf"]
+CMD ["befunge93", "main.bf"]
