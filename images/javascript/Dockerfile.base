@@ -1,0 +1,14 @@
+FROM node:20.9-alpine
+
+SHELL ["/bin/bash", "-c"]
+
+ONBUILD WORKDIR /app
+
+ONBUILD COPY package-lock.json .
+ONBUILD COPY package.json .
+
+ONBUILD RUN ["npm", "install"]
+
+ONBUILD COPY app .
+
+CMD ["node", "app"]
