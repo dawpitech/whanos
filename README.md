@@ -36,6 +36,12 @@ Navigate to `<target_ip>:8080` to access the jenkins instance interface
 
 ## How to use
 
+Current default access:
+```
+username: admin
+password: password
+```
+
 ### Adding your project repository to Jenkins
 
 Will do later, I promise
