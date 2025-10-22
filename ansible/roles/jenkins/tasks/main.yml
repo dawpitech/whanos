@@ -54,7 +54,7 @@
 - name: Upload job_dsl.groovy file
   ansible.builtin.copy:
     src: files/job_dsl.groovy
-    dest: /var/jenkins_home/job_dsl.groovy
+    dest: /var/lib/jenkins/job_dsl.groovy
     owner: jenkins
     group: jenkins
     mode: '0644'
@@ -70,7 +70,7 @@
 - name: Upload images folder
   ansible.builtin.copy:
     src: files/images
-    dest: /var/jenkins_home/images
+    dest: /var/lib/jenkins/images
     owner: jenkins
     group: jenkins
     mode: '0644'
