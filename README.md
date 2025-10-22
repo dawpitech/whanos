@@ -4,6 +4,17 @@
 
 ## How to setup
 
+### Prerequisites
+
+1. Ansible (version >=2.17.0)
+
+### Remote expected configuration
+
+At least 2Gb of RAM, 4vcore and 16go of disk space  
+Supported distributions: Debian12, Debian13
+
+### Setup instructions
+
 First based on `ansible/group_vars/example.yml` fill the file with the required informations and generate an ansible vault with your secrets in it, you should call it `all.yml`.
 
 ```bash
@@ -22,6 +33,12 @@ ansible-playbook -i inventory.yaml playbook.yml
 ```
 
 Navigate to `<target_ip>:8080` to access the jenkins instance interface
+
+## How to use
+
+### Adding your project repository to Jenkins
+
+Will do later, I promise
 
 ## Notes for developpers:
 
