@@ -35,3 +35,35 @@ freeStyleJob('Whanos base images/Build all base images') {
         )
     }
 }
+
+freeStyleJob('link-project') {
+    parameters {
+        stringParam('GIT_REPOSITORY_URL', null, 'Repository git URL (e.g.: "git@github.com:dawpitech/whanos.git")')
+        stringParam('PROJECT_NAME', null, 'Project name (e.g.: "whanos")')
+    }
+    steps {
+        dsl {
+            text('''
+                freeStyleJob("Projects/${PROJECT_NAME}") {
+                    wrappers {
+                        preBuildCleanup()
+                    }
+                    scm {
+                        git {
+                            remote {
+                                name('origin')
+                                url(GIT_REPOSITORY_URL)
+                            }
+                        }
+                    }
+                    triggers {
+                        scm("* * * * *")
+                    }
+                    steps {
+                        shell("echo Building project " + PROJECT_NAME)
+                    }
+                }
+            ''')
+        }
+    }
+}
