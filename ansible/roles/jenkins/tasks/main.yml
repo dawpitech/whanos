@@ -44,10 +44,19 @@
     group: jenkins
     mode: '0755'
 
+- name: Create Jenkins config home
+  become: true
+  ansible.builtin.file:
+    path: /var/jenkins_home
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: '0755'
+
 - name: Upload plugins.txt file
   ansible.builtin.copy:
     src: files/plugins.txt
-    dest: /tmp/plugins.txt
+    dest: /var/jenkins_home/plugins.txt
     owner: jenkins
     group: jenkins
     mode: '0644'
@@ -60,7 +69,7 @@
     group: jenkins
     mode: '0755'
 
-- name: Stop Jenkins before plugin installation
+- name: Stop Jenkins before configuration
   become: true
   ansible.builtin.service:
     name: jenkins
@@ -74,7 +83,7 @@
 - name: Install plugins using jenkins-plugin-cli jar with correct version
   become: true
   ansible.builtin.command:
-    cmd: java -jar /usr/local/bin/jenkins-plugin-cli.jar --jenkins-version {{ jenkins_version_output.stdout }} --plugin-download-directory /var/lib/jenkins/plugins --plugin-file /tmp/plugins.txt --verbose
+    cmd: java -jar /usr/local/bin/jenkins-plugin-cli.jar --jenkins-version {{ jenkins_version_output.stdout }} --plugin-download-directory /var/lib/jenkins/plugins -f /var/jenkins_home/plugins.txt
   environment:
     JENKINS_HOME: /var/lib/jenkins
 
@@ -86,17 +95,13 @@
     group: jenkins
     recurse: yes
 
-- name: Start Jenkins after plugin installation
+- name: Start Jenkins after configuration
   become: true
   ansible.builtin.service:
     name: jenkins
     state: started
 
-- name: Wait for Jenkins to start after plugin installation
+- name: Wait for Jenkins to start
   ansible.builtin.wait_for:
     port: "{{ jenkins_port }}"
     timeout: 30
-
-- name: Print initial Jenkins admin password path
-  ansible.builtin.debug:
-    msg: "Jenkins is ready. Retrieve admin password using: sudo cat /var/lib/jenkins/secrets/initialAdminPassword"
