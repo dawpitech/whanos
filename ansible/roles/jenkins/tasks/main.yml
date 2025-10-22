@@ -23,18 +23,6 @@
     state: present
     update_cache: yes
 
-- name: Ensure Jenkins service is enabled and started
-  become: true
-  ansible.builtin.service:
-    name: jenkins
-    state: started
-    enabled: yes
-
-- name: Wait for Jenkins to start listening on port {{ jenkins_port }}
-  ansible.builtin.wait_for:
-    port: "{{ jenkins_port }}"
-    timeout: 30
-
 - name: Upload plugins.txt file
   ansible.builtin.copy:
     src: files/plugins.txt
@@ -66,14 +54,6 @@
     owner: jenkins
     group: jenkins
     mode: '0755'
-
-- name: Upload images folder
-  ansible.builtin.copy:
-    src: files/images
-    dest: /var/lib/jenkins/images
-    owner: jenkins
-    group: jenkins
-    mode: '0644'
 
 - name: Stop Jenkins before configuration
   become: true
