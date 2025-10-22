@@ -4,8 +4,8 @@ jenkins:
     local:
       allowsSignup: false
       users:
-        - id: "hub"
-          name: "Administrator"
+        - id: "admin"
+          name: "Admin"
           password: "password"
   authorizationStrategy:
     roleBased:
@@ -14,9 +14,9 @@ jenkins:
           - name: "admin"
             description: "Jenkins administrator"
             entries:
-              - user: "hub"
+              - user: "admin"
             permissions:
               - "Overall/Administer"
 
-#jobs:
-#  - file: /var/jenkins_home/job_dsl.groovy
+jobs:
+  - file: /var/lib/jenkins/job_dsl.groovy
