@@ -1,19 +1,19 @@
 - name: Install Java (required for Jenkins)
   become: true
   ansible.builtin.apt:
-    name: "{{ java_package }}"
+    name: openjdk-17-jdk
     state: present
 
 - name: Add Jenkins repository key
   become: true
   ansible.builtin.apt_key:
-    url: "{{ jenkins_repo_key_url }}"
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
     state: present
 
 - name: Add Jenkins repository
   become: true
   ansible.builtin.apt_repository:
-    repo: "{{ jenkins_repo_url }}"
+    repo: deb https://pkg.jenkins.io/debian-stable binary/
     state: present
 
 - name: Install Jenkins
@@ -37,19 +37,26 @@
 
 - name: Upload plugins.txt file
   ansible.builtin.copy:
-    src: ./plugins.txt
-    dest: "{{ plugins_file_remote }}"
+    src: files/plugins.txt
+    dest: /tmp/plugins.txt
     owner: jenkins
     group: jenkins
     mode: '0644'
 
-- name: Install Jenkins plugins from plugins.txt as jenkins user
-  become: true
+- name: Download jenkins-plugin-cli jar
+  ansible.builtin.get_url:
+    url: https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.13.2/jenkins-plugin-manager-2.13.2.jar
+    dest: /usr/local/bin/jenkins-plugin-cli.jar
+    owner: jenkins
+    group: jenkins
+    mode: '0755'
+
+- name: Install plugins using jenkins-plugin-cli jar
   ansible.builtin.command:
-    cmd: "jenkins-plugin-cli --plugin-file {{ plugins_file_remote }}"
+    cmd: >
+      java -jar /usr/local/bin/jenkins-plugin-cli.jar
+      --plugin-file {{ plugins_file_remote }}
   become_user: jenkins
-  environment:
-    JENKINS_HOME: "{{ jenkins_home }}"
   register: plugin_install
   changed_when: "'Installed' in plugin_install.stdout or 'Updated' in plugin_install.stdout"
 

@@ -5,10 +5,5 @@
 - hosts: hub
   vars:
     jenkins_port: 8080
-    jenkins_repo_key_url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-    jenkins_repo_url: deb https://pkg.jenkins.io/debian-stable binary/
-    java_package: openjdk-17-jdk
-    jenkins_home: /var/lib/jenkins
-    plugins_file_remote: /tmp/plugins.txt
   roles:
         - jenkins
