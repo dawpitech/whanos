@@ -95,6 +95,13 @@
     group: jenkins
     recurse: yes
 
+- name: Add jenkins user to docker group
+  become: true
+  ansible.builtin.user:
+    name: jenkins
+    groups: docker
+    append: yes
+
 - name: Start Jenkins after configuration
   become: true
   ansible.builtin.service:

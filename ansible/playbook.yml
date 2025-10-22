@@ -7,3 +7,4 @@
     jenkins_port: 8080
   roles:
         - jenkins
+        - geerlingguy.docker
