@@ -51,6 +51,14 @@
     group: jenkins
     mode: '0644'
 
+- name: Upload job_dsl.groovy file
+  ansible.builtin.copy:
+    src: files/job_dsl.groovy
+    dest: /var/jenkins_home/job_dsl.groovy
+    owner: jenkins
+    group: jenkins
+    mode: '0644'
+
 - name: Download jenkins-plugin-cli jar
   ansible.builtin.get_url:
     url: https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.13.2/jenkins-plugin-manager-2.13.2.jar
@@ -58,6 +66,14 @@
     owner: jenkins
     group: jenkins
     mode: '0755'
+
+- name: Upload images folder
+  ansible.builtin.copy:
+    src: files/images
+    dest: /var/jenkins_home/images
+    owner: jenkins
+    group: jenkins
+    mode: '0644'
 
 - name: Stop Jenkins before configuration
   become: true
