@@ -86,18 +86,10 @@
   ansible.builtin.systemd:
     daemon_reload: yes
 
-- name: Get Jenkins version
-  become: true
-  ansible.builtin.shell: |
-    java -jar /usr/share/java/jenkins.war --version 2>/dev/null
-  register: jenkins_version_output
-
-- name: Install plugins using jenkins-plugin-cli jar with correct version
+- name: Install plugins using jenkins-plugin-cli
   become: true
   ansible.builtin.command:
-    cmd: java -jar /usr/local/bin/jenkins-plugin-cli.jar --jenkins-version {{ jenkins_version_output.stdout }} --plugin-download-directory /var/lib/jenkins/plugins -f /var/lib/jenkins/plugins.txt
-  environment:
-    JENKINS_HOME: /var/lib/jenkins
+    cmd: java -jar /usr/local/bin/jenkins-plugin-cli.jar --plugin-download-directory /var/lib/jenkins/plugins -f /var/lib/jenkins/plugins.txt
 
 - name: Set correct ownership for Jenkins plugins directory
   become: true
@@ -113,7 +105,7 @@
     name: jenkins
     state: started
 
-- name: Wait for Jenkins to start
+- name: Wait for Jenkins to start listening on port {{ jenkins_port }}
   ansible.builtin.wait_for:
     port: "{{ jenkins_port }}"
     timeout: 30
