@@ -18,7 +18,15 @@ languages.each { language ->
         }
         steps {
             shell("echo \"Building Docker image for ${language}\"")
-            shell("docker build -t whanos-${language} images/${language}/Dockerfile.base")
+            shell("docker build -t whanos-${language} - < images/${language}/Dockerfile.base")
         }
+    }
+}
+
+freeStyleJob('Whanos base images/Build all base images') {
+    publishers {
+        downstream(
+            languages.collect { language -> "Whanos base images/whanos-${language}" }
+        )
     }
 }
