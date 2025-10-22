@@ -1,0 +1,20 @@
+- name: restart docker
+  become: true
+  ansible.builtin.systemd:
+    name: docker
+    state: restarted
+
+- name: restart registry
+  become: true
+  community.docker.docker_container:
+    name: registry
+    image: registry:2
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ registry_port }}:5000"
+    volumes:
+      - /opt/registry/data:/var/lib/registry
+      - /opt/registry/config/config.yml:/etc/docker/registry/config.yml:ro
+    env:
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry

@@ -1,0 +1,65 @@
+- name: Create Docker daemon config directory
+  become: true
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+
+- name: Configure Docker daemon for insecure registry
+  become: true
+  ansible.builtin.copy:
+    content: |
+      {
+        "insecure-registries": ["{{ ansible_default_ipv4.address }}:{{ registry_port }}"]
+      }
+    dest: /etc/docker/daemon.json
+    mode: '0644'
+  notify: restart docker
+
+- name: Create directory for registry data
+  become: true
+  ansible.builtin.file:
+    path: /opt/registry/data
+    state: directory
+    mode: '0755'
+
+- name: Create directory for registry config
+  become: true
+  ansible.builtin.file:
+    path: /opt/registry/config
+    state: directory
+    mode: '0755'
+
+- name: Generate registry configuration
+  become: true
+  ansible.builtin.template:
+    src: registry-config.yml.j2
+    dest: /opt/registry/config/config.yml
+    mode: '0644'
+  notify: restart registry
+
+- name: Pull Docker Registry image
+  become: true
+  community.docker.docker_image:
+    name: registry:2
+    source: pull
+
+- name: Create Docker Registry container
+  become: true
+  community.docker.docker_container:
+    name: registry
+    image: registry:2
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ registry_port }}:5000"
+    volumes:
+      - /opt/registry/data:/var/lib/registry
+      - /opt/registry/config/config.yml:/etc/docker/registry/config.yml:ro
+    env:
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+
+- name: Wait for registry to be ready
+  ansible.builtin.wait_for:
+    port: "{{ registry_port }}"
+    timeout: 30
