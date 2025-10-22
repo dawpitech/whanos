@@ -20,3 +20,16 @@ jenkins:
 
 jobs:
   - file: /var/lib/jenkins/job_dsl.groovy
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+        - basicSSHUserPrivateKey:
+            id: "git_ssh_key"
+            description: "Default SSH key for git operations"
+            scope: GLOBAL
+            privateKeySource:
+              directEntry:
+                privateKey: "${SSH_PRIVATE_KEY}"
+            username: "${SSH_USERNAME}"

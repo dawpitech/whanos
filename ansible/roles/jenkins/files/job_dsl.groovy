@@ -53,6 +53,7 @@ freeStyleJob('link-project') {
                             remote {
                                 name('origin')
                                 url(GIT_REPOSITORY_URL)
+                                credentials('git_ssh_key')
                             }
                         }
                     }
