@@ -5,7 +5,7 @@
     state: directory
     mode: '0755'
 
-- name: Configure Docker daemon for insecure registry
+- name: Configure Docker daemon to allow insecure registry
   become: true
   ansible.builtin.copy:
     content: |
@@ -30,10 +30,10 @@
     state: directory
     mode: '0755'
 
-- name: Generate registry configuration
+- name: Copy over registry configuration
   become: true
-  ansible.builtin.template:
-    src: registry-config.yml.j2
+  ansible.builtin.copy:
+    src: files/registry-config.yml
     dest: /opt/registry/config/config.yml
     mode: '0644'
   notify: restart registry
