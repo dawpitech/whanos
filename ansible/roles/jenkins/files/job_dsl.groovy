@@ -14,7 +14,7 @@ languages.each { language ->
             preBuildCleanup()
         }
         scm {
-            github('dawpitech/whanos', null, 'https', 'github.com', null)
+            github('dawpitech/whanos')
         }
         steps {
             shell("echo \"Building Docker image for ${language}\"")
