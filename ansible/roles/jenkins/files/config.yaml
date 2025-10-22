@@ -1,0 +1,22 @@
+jenkins:
+  systemMessage: "Haha chapeau-chapeau"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "hub"
+          name: "Administrator"
+          password: "password"
+  authorizationStrategy:
+    roleBased:
+      roles:
+        global:
+          - name: "admin"
+            description: "Jenkins administrator"
+            entries:
+              - user: "hub"
+            permissions:
+              - "Overall/Administer"
+
+#jobs:
+#  - file: /var/jenkins_home/job_dsl.groovy

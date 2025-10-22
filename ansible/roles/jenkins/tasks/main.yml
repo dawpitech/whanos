@@ -35,28 +35,18 @@
     port: "{{ jenkins_port }}"
     timeout: 30
 
-- name: Create Jenkins plugins directory
-  become: true
-  ansible.builtin.file:
-    path: /var/lib/jenkins/plugins
-    state: directory
-    owner: jenkins
-    group: jenkins
-    mode: '0755'
-
-- name: Create Jenkins config home
-  become: true
-  ansible.builtin.file:
-    path: /var/jenkins_home
-    state: directory
-    owner: jenkins
-    group: jenkins
-    mode: '0755'
-
 - name: Upload plugins.txt file
   ansible.builtin.copy:
     src: files/plugins.txt
-    dest: /var/jenkins_home/plugins.txt
+    dest: /var/lib/jenkins/plugins.txt
+    owner: jenkins
+    group: jenkins
+    mode: '0644'
+
+- name: Upload config.yaml (jenkins.yaml) file
+  ansible.builtin.copy:
+    src: files/config.yaml
+    dest: /var/lib/jenkins/jenkins.yaml
     owner: jenkins
     group: jenkins
     mode: '0644'
@@ -75,15 +65,37 @@
     name: jenkins
     state: stopped
 
+- name: Create Jenkins systemd override directory
+  become: true
+  ansible.builtin.file:
+    path: /etc/systemd/system/jenkins.service.d
+    state: directory
+    mode: '0755'
+
+- name: Set JAVA_OPTS environment variable for Jenkins
+  become: true
+  ansible.builtin.copy:
+    content: |
+      [Service]
+      Environment="JAVA_OPTS=-Djenkins.install.runSetupWizard=false"
+    dest: /etc/systemd/system/jenkins.service.d/override.conf
+    mode: '0644'
+
+- name: Reload systemd daemon
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
 - name: Get Jenkins version
   become: true
   ansible.builtin.shell: |
     java -jar /usr/share/java/jenkins.war --version 2>/dev/null
+  register: jenkins_version_output
 
 - name: Install plugins using jenkins-plugin-cli jar with correct version
   become: true
   ansible.builtin.command:
-    cmd: java -jar /usr/local/bin/jenkins-plugin-cli.jar --jenkins-version {{ jenkins_version_output.stdout }} --plugin-download-directory /var/lib/jenkins/plugins -f /var/jenkins_home/plugins.txt
+    cmd: java -jar /usr/local/bin/jenkins-plugin-cli.jar --jenkins-version {{ jenkins_version_output.stdout }} --plugin-download-directory /var/lib/jenkins/plugins -f /var/lib/jenkins/plugins.txt
   environment:
     JENKINS_HOME: /var/lib/jenkins
 
