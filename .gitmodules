@@ -1,3 +1,18 @@
 [submodule "example_apps/whanos-example-ts"]
 	path = example_apps/whanos-example-ts
 	url = git@github.com:dawpitech/whanos-example-ts
+[submodule "example_apps/whanos-example-python"]
+	path = example_apps/whanos-example-python
+	url = git@github.com:dawpitech/whanos-example-python
+[submodule "example_apps/whanos-example-js"]
+	path = example_apps/whanos-example-js
+	url = git@github.com:dawpitech/whanos-example-js
+[submodule "example_apps/whanos-example-java"]
+	path = example_apps/whanos-example-java
+	url = git@github.com:dawpitech/whanos-example-java
+[submodule "example_apps/whanos-example-c"]
+	path = example_apps/whanos-example-c
+	url = git@github.com:dawpitech/whanos-example-c
+[submodule "example_apps/whanos-example-befunge"]
+	path = example_apps/whanos-example-befunge
+	url = git@github.com:dawpitech/whanos-example-befunge
