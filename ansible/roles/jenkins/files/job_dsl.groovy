@@ -39,7 +39,7 @@ freeStyleJob('Whanos base images/Build all base images') {
 freeStyleJob('link-project') {
     parameters {
         stringParam('GIT_REPOSITORY_URL', null, 'Repository git URL (e.g.: "git@github.com:dawpitech/whanos.git")')
-        stringParam('PROJECT_NAME', null, 'Project name (e.g.: "whanos")')
+        stringParam('PROJECT_NAME', null, 'Project name (e.g.: "whanos"). Can only contains alphanumeric characters, hyphens, and underscores!')
     }
     steps {
         dsl {
