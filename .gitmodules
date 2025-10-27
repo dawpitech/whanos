@@ -1,0 +1,3 @@
+[submodule "example_apps/whanos-example-ts"]
+	path = example_apps/whanos-example-ts
+	url = git@github.com:dawpitech/whanos-example-ts
