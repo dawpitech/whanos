@@ -4,9 +4,9 @@ jenkins:
     local:
       allowsSignup: false
       users:
-        - id: "admin"
+        - id: "${JENKINS_ADMIN_USERNAME}"
           name: "Admin"
-          password: "password"
+          password: "${JENKINS_ADMIN_PASSWORD}"
   authorizationStrategy:
     roleBased:
       roles:
@@ -14,7 +14,7 @@ jenkins:
           - name: "admin"
             description: "Jenkins administrator"
             entries:
-              - user: "admin"
+              - user: "${JENKINS_ADMIN_USERNAME}"
             permissions:
               - "Overall/Administer"
 

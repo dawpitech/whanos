@@ -3,3 +3,5 @@ vault_ssh_private_key: |
      example key placeholder value
   -----END OPENSSH PRIVATE KEY-------
 vault_ssh_username: username
+vault_jenkins_admin_username: admin
+vault_jenkins_admin_password: password

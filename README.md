@@ -15,7 +15,8 @@ Three remotes with each:
 - CPU >= 2vcore
 - HDD >= 16Go
 
-Supported distributions: Debian12, Debian13
+> [!NOTE]
+> Supported distributions: Debian12, Debian13
 
 The first target should be in the hub group, this target will be responsible for running the Jenkins instace and the docker registry.  
 The second target should be in the k8s group, this target will host the k8s control plane.  
@@ -40,18 +41,14 @@ ansible-galaxy install -r requirements.yml
 ansible-playbook -i inventory.yaml playbook.yml
 ```
 
-Navigate to `<hub_target_ip>:8080` to access the jenkins instance interface
-
 ## How to use
 
-Current default access:
-```
-username: admin
-password: password
-```
+Navigate to `<hub_target_ip>:8080` to access the jenkins instance interface
+
+Credentials to log on the Jenkins correspond to the value of both `vault_jenkins_admin_username` and `vault_jenkins_admin_password` in the ansible vault file.
 
 > [!Caution]
-> Those credentials should only be used one time to change them to a more secure configuration. Do not keep them for deployment on real hardware. Please override them in the ansible vault.
+> Those credentials should only be used for developpement purposes. Do not keep them for deployment on real hardware. Please override them in the ansible vault.
 
 TODO: /!\ CREDENTIALS OVERRIDE IN VAULT
 
@@ -66,10 +63,13 @@ For each project you need to specify:
 
 ## Notes for developpers:
 
-To push docker images using HTTP :
+To locally access the docker registry launched on the same remote as the Jenkins instance you need to allow connection with it as an insecure registry
+
+```bash
 sudo mkdir -p /etc/docker
 
-Create /etc/docker/daemon.json with:
-   {
-     "insecure-registries": ["192.168.1.146:5000"]
-   }
+echo """{
+  "insecure-registries": ["192.168.1.146:5000"]
+}""" > /etc/docker/daemon.json
+
+```
