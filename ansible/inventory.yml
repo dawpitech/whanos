@@ -2,3 +2,8 @@ hub:
   hosts:
     hub-1:
       ansible_host: 192.168.1.146
+
+k8s:
+  hosts:
+    hub-2:
+      ansible_host: 192.168.1.12

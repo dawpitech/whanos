@@ -10,3 +10,10 @@
         - geerlingguy.docker
         - jenkins
         - registry
+
+- hosts: k8s
+  vars:
+    kubernetes_role: "control_plane"
+  roles:
+    - geerlingguy.containerd
+    - geerlingguy.kubernetes
