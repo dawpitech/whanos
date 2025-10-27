@@ -17,14 +17,17 @@ spec:
     spec:
       containers:
         - name: {{ .Release.Name | lower }}-container
-          image: ???
+          image: {{ .Values.deployment.image.repository }}/{{ .Values.deployment.image.name }}
+          {{- if .Values.deployment.ports }}
+          ports:
+            {{- range .Values.deployment.ports }}
+            - containerPort: {{ . }}
+            {{- end }}
+          {{- end }}
           {{- if .Values.deployment.resources }}
           resources:
             limits:
               memory: {{ .Values.deployment.resources.limits.memory }}
             requests:
               memory: {{ .Values.deployment.resources.requests.memory }}
-          {{- end}}
-
-
-
+          {{- end }}

@@ -118,6 +118,15 @@
     group: jenkins
     mode: '0644'
 
+- name: Copy helm template chart to jenkins data folder
+  become: true
+  ansible.builtin.copy:
+    src: files/mychart
+    dest: /var/lib/jenkins/custom_data/mychart
+    owner: jenkins
+    group: jenkins
+    mode: '0755'
+
 - name: Copy whanosInterpreter to jenkins data folder
   become: true
   ansible.builtin.copy:

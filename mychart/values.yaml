@@ -7,3 +7,6 @@ deployment:
       memory: "64M"
   ports:
     - 3000
+  image:
+    repository: placeholder-repository
+    name: placeholder-whanos-project
