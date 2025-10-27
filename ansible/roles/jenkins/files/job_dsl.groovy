@@ -38,6 +38,7 @@ freeStyleJob('link-project') {
         stringParam('GIT_REPOSITORY_URL', null, 'Repository git URL (e.g.: "git@github.com:dawpitech/whanos.git")')
         stringParam('PROJECT_NAME', null, 'Project name (e.g.: "whanos"). Can only contains alphanumeric characters, hyphens, and underscores!')
         stringParam('ID_SSH_CREDENTIALS', 'git_ssh_key', 'ID of the SSH credentials to use to access the git repository.')
+        stringParam('DOCKER_REGISTRY', 'localhost:5000', 'Docker registry to push the image to (and pull the base image if used).')
     }
     steps {
         dsl {
@@ -60,7 +61,15 @@ freeStyleJob('link-project') {
                     }
                     steps {
                         shell("echo Building project " + PROJECT_NAME)
-                        shell("python3 /var/lib/jenkins/custom_data/whanosInterpreter.py ${PROJECT_NAME}")
+                        shell("python3 /var/lib/jenkins/custom_data/whanosInterpreter.py ${DOCKER_REGISTRY} ${PROJECT_NAME}")
+                        conditionalSteps {
+                            condition {
+                                fileExists('whanos.yml', BaseDir.WORKSPACE)
+                            }
+                            steps {
+                                shell('kubectl apply -f whanos.yml')
+                            }
+                        }
                     }
                 }
             ''')

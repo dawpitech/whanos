@@ -1,8 +1,8 @@
 import os
 import subprocess
 
-if len(os.sys.argv) != 2:
-    print("Usage: python whanosInterpreter.py <project_name>")
+if len(os.sys.argv) != 3:
+    print("Usage: python whanosInterpreter.py <docker_registry_url> <project_name>")
     exit(1)
 
 languages = []
@@ -25,9 +25,9 @@ if len(languages) > 1:
     print("Multiple programming languages detected: " + ", ".join(languages))
     exit(1)
 
-REGISTRY_URL = "localhost:5000"
+REGISTRY_URL = os.sys.argv[1]
 
-image_name = f"whanos-project-{os.sys.argv[1]}"
+image_name = f"whanos-project-{os.sys.argv[2]}"
 
 try:
     if os.path.exists('Dockerfile'):

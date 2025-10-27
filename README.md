@@ -59,9 +59,10 @@ TODO: /!\ CREDENTIALS OVERRIDE IN VAULT
 
 Using the `link-project` job you can register a new project to follow on the whanos infrastructure.  
 For each project you need to specify:
-* The git url to clone the repository (e.g.: "git@github.com:dawpitech/whanos.git"). This field NEED to be using ssh syntax, https syntax is NOT SUPPORTED
-* The project name, that would be used as the display name and the docker image name in the registry. Thus it need to contains only alphanumerical characters, hyphens and underscores.
-* The ssh credentials used to clone the repository. By default this value is at `git_ssh_key` which is the system wide ssh keys choosed during installation of the whanos infrastructure.
+- The git url to clone the repository (e.g.: "git@github.com:dawpitech/whanos.git"). This field NEED to be using ssh syntax, https syntax is NOT SUPPORTED
+- The project name, that would be used as the display name and the docker image name in the registry. Thus it need to contains only alphanumerical characters, hyphens and underscores.
+- The ssh credentials used to clone the repository. By default this value is at `git_ssh_key` which is the system wide ssh keys choosed during installation of the whanos infrastructure.
+- The adress of the docker registry to use to push the docker image to (and pull the base image if needed)
 
 ## Notes for developpers:
 
