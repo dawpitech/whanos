@@ -19,6 +19,7 @@
             lazydocker
             dive
             ansible
+            kubernetes-helm-wrapped
           ];
         };
 

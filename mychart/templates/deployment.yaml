@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  namespace: default
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name | lower }}-container
+          image: ???
+          {{- if .Values.deployment.resources }}
+          resources:
+            limits:
+              memory: {{ .Values.deployment.resources.limits.memory }}
+            requests:
+              memory: {{ .Values.deployment.resources.requests.memory }}
+          {{- end}}
+
+
+
