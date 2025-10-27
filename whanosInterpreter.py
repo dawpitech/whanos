@@ -26,7 +26,7 @@ if len(languages) > 1:
 
 REGISTRY_URL = "localhost:5000"
 
-image_name = f"whanos-project-{sys.argv[1]}"
+image_name = f"whanos-project-{os.sys.argv[1]}"
 
 if os.path.exists('Dockerfile'):
     os.system(f"docker build -t {image_name} .")
