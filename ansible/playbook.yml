@@ -13,10 +13,18 @@
     - role: registry
       when: registry_adress == "localhost"
 
-- hosts: k8s
+- hosts: k8s_control_plane
   vars:
     kubernetes_role: "control_plane"
   roles:
     - geerlingguy.containerd
     - geerlingguy.kubernetes
     - geerlingguy.helm
+    - dashboard
+
+- hosts: k8s_worker
+  vars:
+    kubernetes_role: "node"
+  roles:
+    - geerlingguy.containerd
+    - geerlingguy.kubernetes

@@ -11,3 +11,7 @@ roles:
 
   - name: geerlingguy.helm
     version: 1.0.1
+
+collections:
+  - name: kubernetes.core
+    version: 2.4.0

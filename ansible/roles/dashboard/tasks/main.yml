@@ -1,0 +1,54 @@
+---
+- name: Wait for Kubernetes API to be available
+  become: true
+  ansible.builtin.wait_for:
+    host: localhost
+    port: 6443
+    timeout: 300
+    delay: 10
+
+- name: Apply Kubernetes Dashboard manifests
+  become: true
+  ansible.builtin.shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+
+- name: Patch dashboard service to NodePort
+  become: true
+  ansible.builtin.shell: kubectl patch svc kubernetes-dashboard -n kubernetes-dashboard -p '{"spec":{"type":"NodePort","ports":[{"port":443,"targetPort":8443,"nodePort":30443}]}}'
+
+- name: Create admin service account
+  become: true
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: ServiceAccount
+    name: admin-user
+    namespace: kubernetes-dashboard
+    state: present
+
+- name: Create admin ClusterRoleBinding
+  become: true
+  ansible.builtin.shell: |
+    cat <<EOF | kubectl apply -f -
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: admin-user
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: cluster-admin
+    subjects:
+    - kind: ServiceAccount
+      name: admin-user
+      namespace: kubernetes-dashboard
+    EOF
+
+- name: Display dashboard access information
+  ansible.builtin.debug:
+    msg:
+      - "Kubernetes Dashboard installed successfully!"
+      - "Access the dashboard at: https://{{ inventory_hostname }}:30443"
+      - "To get the admin token, run on the control plane:"
+      - "kubectl -n kubernetes-dashboard create token admin-user --duration=0"
+      - "Or for unlimited duration:"
+      - "kubectl -n kubernetes-dashboard create token admin-user"
+
