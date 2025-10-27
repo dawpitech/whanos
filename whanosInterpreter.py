@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 if len(os.sys.argv) != 2:
     print("Usage: python whanosInterpreter.py <project_name>")
@@ -28,10 +29,15 @@ REGISTRY_URL = "localhost:5000"
 
 image_name = f"whanos-project-{os.sys.argv[1]}"
 
-if os.path.exists('Dockerfile'):
-    os.system(f"docker build -t {image_name} .")
-else:
-    os.system(f"docker build -f /var/lib/jenkins/custom_data/docker_images/{languages[0]}/Dockerfile.base -t {image_name} .")
+try:
+    if os.path.exists('Dockerfile'):
+        subprocess.check_call(['docker', 'build', '-t', image_name, '.'])
+    else:
+        subprocess.check_call(['docker', 'build', '-f', f'/var/lib/jenkins/custom_data/docker_images/{languages[0]}/Dockerfile.base', '-t', image_name, '.'])
 
-os.system(f"docker tag {image_name} {REGISTRY_URL}/{image_name}")
-os.system(f"docker push {REGISTRY_URL}/{image_name}")
+    subprocess.check_call(['docker', 'tag', image_name, f'{REGISTRY_URL}/{image_name}'])
+    subprocess.check_call(['docker', 'push', f'{REGISTRY_URL}/{image_name}'])
+    print(f"Successfully built and pushed image: {image_name}")
+except subprocess.CalledProcessError as e:
+    print(f"Error: {e}")
+    exit(e)
