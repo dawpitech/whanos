@@ -8,3 +8,6 @@ roles:
  
   - name: geerlingguy.kubernetes
     version: 8.2.0
+
+  - name: geerlingguy.helm
+    version: 1.0.1

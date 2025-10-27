@@ -20,6 +20,7 @@
             dive
             ansible
             kubernetes-helm-wrapped
+            kubectl
           ];
         };
 

@@ -1,15 +1,16 @@
 - hosts: all
   roles:
-        - base
+    - base
 
 - hosts: hub
   vars:
     jenkins_port: 8080
     registry_port: 5000
   roles:
-        - geerlingguy.docker
-        - jenkins
-        - registry
+    - geerlingguy.docker
+    - geerlingguy.helm
+    - jenkins
+    - registry
 
 - hosts: k8s
   vars:
@@ -17,3 +18,4 @@
   roles:
     - geerlingguy.containerd
     - geerlingguy.kubernetes
+    - geerlingguy.helm
