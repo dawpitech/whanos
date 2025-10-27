@@ -4,7 +4,6 @@
 
 - hosts: hub
   vars:
-    jenkins_port: 8080
     registry_adress: "localhost"
     registry_port: 5000
   roles:

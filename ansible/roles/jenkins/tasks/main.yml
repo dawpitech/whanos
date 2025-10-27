@@ -135,5 +135,5 @@
 
 - name: Wait for Jenkins to start listening on port {{ jenkins_port }}
   ansible.builtin.wait_for:
-    port: "{{ jenkins_port }}"
+    port: 8080
     timeout: 30
