@@ -6,6 +6,7 @@
   vars:
     registry_adress: "localhost"
     registry_port: 5000
+    helm_version: "v3.19.0"
   roles:
     - geerlingguy.docker
     - geerlingguy.helm
@@ -16,6 +17,7 @@
 - hosts: k8s_control_plane
   vars:
     kubernetes_role: "control_plane"
+    helm_version: "v3.19.0"
   roles:
     - geerlingguy.containerd
     - geerlingguy.kubernetes
