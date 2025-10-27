@@ -37,3 +37,6 @@ credentials:
 security:
   gitHostKeyVerificationConfiguration:
     sshHostKeyVerificationStrategy: "acceptFirstConnectionStrategy"
+  scriptApproval:
+    approvedScriptHashes:
+      - "SHA512:c5a45c6ed8956a3166538adbbe53c11c9dce19e4ac44dd81ba8c9bbf0a2f714fd3a461036a2b3f6026538fc9d6f9796876a0a6012d647205147b68957caa90cd"

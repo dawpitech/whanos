@@ -16,12 +16,9 @@ languages.each { language ->
         wrappers {
             preBuildCleanup()
         }
-        scm {
-            github('dawpitech/whanos')
-        }
         steps {
             shell("echo \"Building Docker image for ${language}\"")
-            shell("docker build -t whanos-${language} - < images/${language}/Dockerfile.base")
+            shell("docker build -t whanos-${language} - < /var/lib/jenkins/custom_data/docker_images/${language}/Dockerfile.base")
             shell("docker tag whanos-${language} \${DOCKER_REGISTRY}/whanos-${language}")
             shell("docker push \${DOCKER_REGISTRY}/whanos-${language}")
         }
@@ -63,6 +60,7 @@ freeStyleJob('link-project') {
                     }
                     steps {
                         shell("echo Building project " + PROJECT_NAME)
+                        shell("python3 /var/lib/jenkins/custom_data/whanosInterpreter.py ${PROJECT_NAME}")
                     }
                 }
             ''')
