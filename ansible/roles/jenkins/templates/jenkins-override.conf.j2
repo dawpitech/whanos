@@ -1,4 +1,4 @@
 [Service]
 Environment="JAVA_OPTS=-Djenkins.install.runSetupWizard=false"
-Environment="SSH_PRIVATE_KEY={{ vault_ssh_private_key }}"
+Environment="SSH_PRIVATE_KEY={{ vault_ssh_private_key | replace('\n', '\\n') }}"
 Environment="SSH_USERNAME={{ vault_ssh_username }}"

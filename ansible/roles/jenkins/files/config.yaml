@@ -33,3 +33,7 @@ credentials:
               directEntry:
                 privateKey: "${SSH_PRIVATE_KEY}"
             username: "${SSH_USERNAME}"
+
+security:
+  gitHostKeyVerificationConfiguration:
+    sshHostKeyVerificationStrategy: "acceptFirstConnectionStrategy"
