@@ -40,6 +40,7 @@ freeStyleJob('link-project') {
     parameters {
         stringParam('GIT_REPOSITORY_URL', null, 'Repository git URL (e.g.: "git@github.com:dawpitech/whanos.git")')
         stringParam('PROJECT_NAME', null, 'Project name (e.g.: "whanos"). Can only contains alphanumeric characters, hyphens, and underscores!')
+        stringParam('ID_SSH_CREDENTIALS', 'git_ssh_key', 'ID of the SSH credentials to use to access the git repository.')
     }
     steps {
         dsl {
@@ -53,7 +54,7 @@ freeStyleJob('link-project') {
                             remote {
                                 name('origin')
                                 url(GIT_REPOSITORY_URL)
-                                credentials('git_ssh_key')
+                                credentials(ID_SSH_CREDENTIALS)
                             }
                         }
                     }
