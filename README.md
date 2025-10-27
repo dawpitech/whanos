@@ -50,8 +50,6 @@ Credentials to log on the Jenkins correspond to the value of both `vault_jenkins
 > [!Caution]
 > Those credentials should only be used for developpement purposes. Do not keep them for deployment on real hardware. Please override them in the ansible vault.
 
-TODO: /!\ CREDENTIALS OVERRIDE IN VAULT
-
 ### Adding your project repository to Jenkins
 
 Using the `link-project` job you can register a new project to follow on the whanos infrastructure.  
