@@ -6,7 +6,7 @@ hub:
 k8s_control_plane:
   hosts:
     hub-2:
-      ansible_host: 192.168.1.12
+      ansible_host: 192.168.1.122
 
 k8s_worker:
   hosts:
