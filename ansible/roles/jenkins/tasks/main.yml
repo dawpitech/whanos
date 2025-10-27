@@ -100,6 +100,33 @@
     groups: docker
     append: yes
 
+- name: Create data folder in jenkins home
+  become: true
+  ansible.builtin.file:
+    path: /var/lib/jenkins/custom_data
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: '0755'
+
+- name: Copy docker images to jenkins data folder
+  become: true
+  ansible.builtin.copy:
+    src: files/docker_images
+    dest: /var/lib/jenkins/custom_data/.
+    owner: jenkins
+    group: jenkins
+    mode: '0644'
+
+- name: Copy whanosInterpreter to jenkins data folder
+  become: true
+  ansible.builtin.copy:
+    src: files/whanosInterpreter.py
+    dest: /var/lib/jenkins/custom_data/whanosInterpreter.py
+    owner: jenkins
+    group: jenkins
+    mode: '0755'
+
 - name: Start Jenkins after configuration
   become: true
   ansible.builtin.service:
