@@ -6,37 +6,8 @@
 - name: Setup automation platform (Jenkins)
   hosts: hub-1
   vars:
-    registry_adress: "localhost"
-    registry_port: 5000
+    docker_registry_address: "registry.digitalocean.com/goofy-ah-cringe-registry"
   roles:
-    - jenkins
     - role: registry
-      when: registry_adress == "localhost"
-
-- name: Cluster prep
-  hosts: hub
-  gather_facts: true
-  become: true
-  vars:
-    k3s_version: v1.34.1+k3s1
-    api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
-  roles:
-    - role: k3s.orchestration.prereq
-
-- name: Setup K3S server
-  hosts: hub-1
-  become: true
-  vars:
-    k3s_version: v1.34.1+k3s1
-    api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
-  roles:
-    - role: k3s.orchestration.k3s_server
-
-- name: Setup K3S agent
-  hosts: hub-2
-  become: true
-  vars:
-    k3s_version: v1.34.1+k3s1
-    api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
-  roles:
-    - role: k3s.orchestration.k3s_agent
+      when: docker_registry_address | regex_search('^localhost')
+    - role: jenkins

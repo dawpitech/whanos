@@ -122,7 +122,7 @@
   become: true
   ansible.builtin.copy:
     src: files/mychart
-    dest: /var/lib/jenkins/custom_data/mychart
+    dest: /var/lib/jenkins/custom_data
     owner: jenkins
     group: jenkins
     mode: '0755'
@@ -135,6 +135,33 @@
     owner: jenkins
     group: jenkins
     mode: '0755'
+
+- name: Login to docker registry as jenkins user
+  become: true
+  become_user: jenkins
+  ansible.builtin.command:
+    cmd: >
+      docker login {{ docker_registry_address }}
+      -u {{ docker_registry_username }}
+      -p {{ docker_registry_password }}
+
+- name: Create kube folder in jenkins home
+  become: true
+  ansible.builtin.file:
+    path: /var/lib/jenkins/.kube
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: '0755'
+
+- name: Import kubectl config for jenkins user
+  become: true
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/group_vars/k8s-config.yml"
+    dest: /var/lib/jenkins/.kube/config
+    owner: jenkins
+    group: jenkins
+    mode: '0600'
 
 - name: Start Jenkins after configuration
   become: true
