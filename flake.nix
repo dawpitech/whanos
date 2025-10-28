@@ -25,6 +25,7 @@
 
           shellHook = ''
             export KUBECONFIG=$PWD/k8s-config.yml
+            export ANSIBLE_VAULT_PASSWORD_FILE=/tmp/.vault_pass
           '';
         };
 

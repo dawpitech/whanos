@@ -5,5 +5,5 @@ Environment="SSH_USERNAME={{ vault_ssh_username }}"
 Environment="JENKINS_ADMIN_USERNAME={{ vault_jenkins_admin_username }}"
 Environment="JENKINS_ADMIN_PASSWORD={{ vault_jenkins_admin_password }}"
 Environment="DOCKER_REGISTRY={{ docker_registry_address }}"
-Environment="HTTP_PORT={{ jenkins_interface_port }}"
-Environment="HTTPS_PORT={{ jenkins_interface_secured_port }}"
+ExecStart=
+ExecStart=authbind --deep /usr/bin/jenkins --httpPort={{ jenkins_interface_port }}
