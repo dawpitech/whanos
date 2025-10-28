@@ -21,3 +21,6 @@ To locally access a service deployed by the whanos interface quickly you can for
 ```bash
 kubectl port-forward svc/<project_name>-service <port>
 ```
+
+> [!NOTE]
+> You will need beforehand to have setup your local kubectl to use the same context as your jenkins instance

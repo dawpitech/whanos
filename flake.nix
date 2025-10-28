@@ -22,6 +22,10 @@
             kubernetes-helm-wrapped
             kubectl
           ];
+
+          shellHook = ''
+            export KUBECONFIG=$PWD/k8s-config.yml
+          '';
         };
 
         formatter = pkgs.nixpkgs-fmt;

@@ -1,2 +1,2 @@
 ansible/group_vars/all.yml
-ansible/group_vars/k8s-config.yml
+k8s-config.yml
