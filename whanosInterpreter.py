@@ -26,7 +26,7 @@ if os.path.exists('package.json'):
     languages.append('javascript')
 if os.path.exists('requirements.txt'):
     languages.append('python')
-if os.path.exists('main.bf'):
+if os.path.exists('app/main.bf'):
     languages.append('befunge')
 
 if not languages:
