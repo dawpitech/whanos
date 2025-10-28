@@ -11,7 +11,7 @@ jenkins:
     roleBased:
       roles:
         global:
-          - name: "admin"
+          - name: "Admin"
             description: "Jenkins administrator"
             entries:
               - user: "${JENKINS_ADMIN_USERNAME}"
