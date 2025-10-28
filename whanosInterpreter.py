@@ -5,6 +5,17 @@ if len(os.sys.argv) != 3:
     print("Usage: python whanosInterpreter.py <docker_registry_url> <project_name>")
     exit(1)
 
+print("""
+Running whanos interpreter...
+                     __       __
+                     '.'--.--'.-'
+       .,_------.___,   \' r'
+       ', '-._a      '-' .'
+        '.    '-'Y \._  /
+          '--;____'--.'-,
+           /..'       '''
+""")
+
 languages = []
 
 if os.path.exists('Makefile'):
