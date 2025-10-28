@@ -27,7 +27,7 @@ if len(languages) > 1:
 
 REGISTRY_URL = os.sys.argv[1]
 
-image_name = f"whanos-project-{os.sys.argv[2]}"
+image_name = f"whanos-{os.sys.argv[2]}"
 
 try:
     if os.path.exists('Dockerfile'):
