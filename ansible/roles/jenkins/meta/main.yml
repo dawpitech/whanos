@@ -1,0 +1,7 @@
+---
+dependencies:
+  - role: geerlingguy.helm
+    vars:
+      helm_version: "v3.19.0"
+
+  - role: geerlingguy.docker

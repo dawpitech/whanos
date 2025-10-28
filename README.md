@@ -71,3 +71,17 @@ echo """{
 }""" > /etc/docker/daemon.json
 
 ```
+
+For debug purposes you can access the kubernetes dashboard of the k8s-control-plane using a ssh tunel
+
+On the remote
+```bash
+ssh root@<control_plane_ip>
+kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
+```
+
+On the host
+```bash
+ssh -NL 8443:localhost:8443 root@192.168.1.122
+```
+You can now check the dashboard at https://localhost:8443
