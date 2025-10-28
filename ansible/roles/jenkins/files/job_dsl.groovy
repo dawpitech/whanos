@@ -63,7 +63,7 @@ freeStyleJob('link-project') {
                                 fileExists('whanos.yml', BaseDir.WORKSPACE)
                             }
                             steps {
-                                shell("helm upgrade --install ${PROJECT_NAME} /var/lib/jenkins/custom_data/mychart -f whanos.yml --set deployment.image.repository=${DOCKER_REGISTRY} --set deployment.image.name=whanos-${PROJECT_NAME}")
+                                shell("helm upgrade --install ${PROJECT_NAME} /var/lib/jenkins/custom_data/mychart -f whanos.yml --set deployment.image.repository=${DOCKER_REGISTRY} --set deployment.image.name=${PROJECT_NAME}")
                             }
                         }
                     }

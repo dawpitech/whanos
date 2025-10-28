@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: {{ .Release.Name | lower }}-container
-          image: {{ .Values.deployment.image.repository }}/{{ .Values.deployment.image.name }}
+          image: {{ .Values.deployment.image.repository }}/project-{{ .Values.deployment.image.name }}
           {{- if .Values.deployment.ports }}
           ports:
             {{- range .Values.deployment.ports }}

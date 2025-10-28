@@ -39,4 +39,4 @@ security:
     sshHostKeyVerificationStrategy: "acceptFirstConnectionStrategy"
   scriptApproval:
     approvedScriptHashes:
-      - "SHA512:0bb586d471b8752429c8495d07361650910ce46258609c5248a7f165573c1b4eff2ff1a93c8f4bf95e8db6b5bba68a0a6496e6d8c2a2a08ff58c22a334cb4ac4"
+      - "SHA512:82630f0b1f31d9d1e357bbe6231bb5f00cfabb8e6048ba03b5fab25f0ab7ef8d3c28b7289f2cee71d758d2516c9b67e8bc99f7cd3f59775bba4e337a844d81b0"
