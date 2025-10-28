@@ -1,0 +1,3 @@
+---
+jenkins_interface_port: 80
+jenkins_interface_secured_port: 443
